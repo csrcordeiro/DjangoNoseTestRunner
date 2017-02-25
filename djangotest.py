@@ -3,6 +3,7 @@ import sublime
 import re
 import os.path
 
+SUBLIME_2_VERSION = 2221
 
 class DjangoNoseTestCommand(sublime_plugin.TextCommand):
 
@@ -156,8 +157,12 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
 
         lines = self.get_lines()
 
+        region_class_name = 'entity.name.type.class'
+        if int(sublime.version()) > SUBLIME_2_VERSION:
+            region_class_name = 'entity.name.class'
+
         cls_regions = self.filter_selected_regions(
-            self.get_regions('entity.name.type.class'), lines)
+            self.get_regions(region_class_name), lines)
 
         fn_regions = self.filter_selected_regions(
             self.get_regions('meta.function'), lines)
